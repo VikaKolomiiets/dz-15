@@ -7,21 +7,28 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 
+import java.io.IOException;
+
 import static io.restassured.RestAssured.*;
 
 public class BookingTests {
 
-//    @BeforeMethod
-//    public void setUp(){
-//        RestAssured.baseURI = "https://restful-booker.herokuapp.com";
-//    }
+    @BeforeMethod
+    public void setUp(){
+        RestAssured.baseURI = "https://restful-booker.herokuapp.com";
+    }
 
     @Test
-    public void testCreateBookPost(){
-        Response response = RestAssured.get("https://restful-booker.herokuapp.com/booking");
-        response.statusCode();
+    public void testGetAllIds() {
+        Response response = RestAssured.given().get("/booking");
+        response.then().statusCode(200);
+        //get Ids of all available books for booking
+        response.jsonPath().get("data.findAll");
         response.prettyPrint();
-        JsonPath jsp =new JsonPath(response.asString());
-        int size = jsp.getInt("data.size()");
+    }
+
+    @Test
+    public void testChangePaymentForBooking(){
+
     }
 }
