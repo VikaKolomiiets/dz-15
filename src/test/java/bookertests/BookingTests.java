@@ -34,22 +34,19 @@ public class BookingTests {
                 true,
                 new Bookingdates(Date.valueOf("2018-07-07"), Date.valueOf("2019-07-08")),
                 "new booking");
-        String token = getToken();
 
         Response responseIds = RestAssured.given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
-                .header("Cookie", "token=" + token)
                 .and()
                 .body(createBody)
                 .when()
                 .post("/booking")
                 .then()
                 .extract().response();
-        System.out.println("Status code: "  + responseIds.statusCode());
+        System.out.println("Status code: " + responseIds.statusCode());
         responseIds.prettyPrint();
     }
-
 
     //Task_2 :  Отримати id усіх доступних бронювань книжок (GET /booking)
     @Test
@@ -61,7 +58,6 @@ public class BookingTests {
         System.out.println("Status code: " + responseIds.statusCode());
         responseIds.prettyPrint();
     }
-
 
     //Task_3 :  Вибрати одне з id з п.2 та змінити ціну бронювання (PATCH)
     @Test
@@ -145,7 +141,7 @@ public class BookingTests {
                 and().
                 body("{\"username\" : \"admin\", \"password\" : \"password123\"}").
                 post("https://restful-booker.herokuapp.com/auth");
-       // postRequest.prettyPrint();
+        // postRequest.prettyPrint();
         return postRequest.jsonPath().get("token").toString();
     }
 
